@@ -1,0 +1,52 @@
+<?xaml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--
+		Mapping, allerdings letzendlich ausgeschaltet. Nur Interceptoren
+	-->
+	<bean id="payloadMapping"
+		class="org.springframework.ws.server.endpoint.mapping.PayloadRootQNameEndpointMapping">
+
+		<property name="mappings">
+			<props>
+				<prop key="{http://www.spring-buch.de/ws}bestellenRequest">bestellenEndpoint</prop>
+			</props>
+		</property>
+		<property name="interceptors">
+			<list>
+				<ref local="validatingInterceptor" />
+				<bean
+					class="org.springframework.ws.server.endpoint.interceptor.PayloadLoggingInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="bestellenEndpoint" class="webservice.BestellenEndpoint">
+		<property name="bestellung" ref="bestellung" />
+	</bean>
+
+	<bean id="validatingInterceptor"
+		class="org.springframework.ws.soap.server.endpoint.interceptor.PayloadValidatingInterceptor">
+		<property name="schema" value="/einkaufswagen.xsd" />
+		<property name="validateRequest" value="true" />
+		<property name="validateResponse" value="true" />
+	</bean>
+
+
+	<bean id="einkaufswagen"
+		class="org.springframework.ws.wsdl.wsdl11.DefaultWsdl11Definition">
+		<property name="schema" ref="schema" />
+		<property name="portTypeName" value="Orders" />
+		<property name="locationUri" value="http://localhost:8080/springbuchws/services/" />
+	</bean>
+
+	<bean id="schema" class="org.springframework.xml.xsd.SimpleXsdSchema">
+		<property name="xsd" value="/einkaufswagen.xsd" />
+	</bean>
+
+	<bean
+		class="org.springframework.ws.soap.server.endpoint.SimpleSoapExceptionResolver" />
+
+</beans>

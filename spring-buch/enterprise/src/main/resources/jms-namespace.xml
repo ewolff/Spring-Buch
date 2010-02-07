@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd"
+	xmlns:jms="http://www.springframework.org/schema/jms">
+	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- Allow us to close down without blocking -->
+		<property name="closeTimeout" value="100" />
+		<property name="brokerURL" value="vm://embedded?broker.persistent=false" />
+			<!--value>tcp://localhost:61616</value-->
+	</bean>
+
+	<jms:listener-container container-type="simple" concurrency="5" >
+		<jms:listener destination="Pojo1" ref="pojo"
+			method="handleJMSMessage"  />
+		<jms:listener destination="JMSExporter1" ref="messageListenerKundeDAO" />
+		<jms:listener destination="MessageListener1" ref="myMessageListener" />
+	</jms:listener-container>
+
+	<!-- POJOs -->
+	<bean id="jmsTemplatePojo" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestinationName" value="Pojo1" />
+	</bean>
+	<bean id="pojo" class="jmspojo.MessageHandlerPojo" />
+
+	<!-- JMSExporter -->
+	<bean id="kundeDAO"
+		class="org.springframework.jms.remoting.JmsInvokerProxyFactoryBean">
+		<property name="serviceInterface" value="jmsexporter.IKundeDAO" />
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="queueName" value="JMSExporter1" />
+	</bean>
+	<bean id="messageListenerKundeDAO"
+		class="org.springframework.jms.remoting.JmsInvokerServiceExporter">
+		<property name="service">
+			<bean class="jmsexporter.KundeDAO" />
+		</property>
+		<property name="serviceInterface" value="jmsexporter.IKundeDAO" />
+	</bean>
+
+	<!-- Message Listener -->
+	<bean id="jmsTemplateMessageListener" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="connectionFactory" />
+		<property name="defaultDestinationName" value="MessageListener1" />
+	</bean>
+	<bean id="myMessageListener" class="jmslistener.MyMessageListener" />
+</beans>

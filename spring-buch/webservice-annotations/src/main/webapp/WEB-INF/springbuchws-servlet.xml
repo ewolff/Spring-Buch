@@ -1,0 +1,42 @@
+<?xaml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="bestellenEndpoint" class="webservice.BestellenEndpoint">
+		<property name="bestellung" ref="bestellung" />
+	</bean>
+
+	<bean id="einkaufswagen"
+		class="org.springframework.ws.wsdl.wsdl11.DynamicWsdl11Definition">
+		<property name="builder">
+			<bean
+				class="org.springframework.ws.wsdl.wsdl11.builder.XsdBasedSoap11Wsdl4jDefinitionBuilder">
+				<property name="schema" value="/einkaufswagen.xsd" />
+				<property name="portTypeName" value="BestellenPortType" />
+				<property name="locationUri"
+					value="http://localhost:8080/springbuchws/services" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping" />
+
+	<bean
+		class="org.springframework.ws.server.endpoint.adapter.XPathParamAnnotationMethodEndpointAdapter">
+		<property name="namespaces">
+			<props>
+				<prop key="tns">http://www.spring-buch.de/ws</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.ws.soap.server.endpoint.SimpleSoapExceptionResolver" />
+
+	<!-- bean class="exception.MyExceptionResolver" / -->
+
+
+</beans>
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sec="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.0.xsd">
+	<sec:http>
+		<sec:form-login login-page="/login.jsp" />
+		<sec:http-basic />
+		<sec:logout logout-url="/logout" />
+		<sec:intercept-url pattern="/springbuchweb/liste*"
+			access="ROLE_ADMIN" />
+		<sec:intercept-url pattern="/springbuchweb/**"
+			access="ROLE_USER" />
+	</sec:http>
+	<sec:global-method-security
+		access-decision-manager-ref="unanimousBased" jsr250-annotations="enabled"
+		secured-annotations="enabled">
+		<sec:protect-pointcut access="ROLE_USER, ACL_KUNDE"
+			expression="execution(* dao.*.*(..))" />
+	</sec:global-method-security>
+	<sec:authentication-manager>
+		<sec:authentication-provider>
+			<sec:password-encoder hash="plaintext" />
+			<!-- In produktiver Anwendung  MD5 -->
+			<sec:user-service>
+				<sec:user password="wolff" name="wolff" authorities="ROLE_USER,ROLE_ADMIN" />
+				<sec:user password="spring" name="spring" authorities="ROLE_USER" />
+			</sec:user-service>
+		</sec:authentication-provider>
+	</sec:authentication-manager>
+	<bean id="unanimousBased" class="org.springframework.security.access.vote.UnanimousBased">
+		<property name="decisionVoters">
+			<list>
+				<bean class="org.springframework.security.access.vote.RoleVoter" />
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+				<bean class="security.KundeVoter" />
+			</list>
+		</property>
+	</bean>
+</beans>

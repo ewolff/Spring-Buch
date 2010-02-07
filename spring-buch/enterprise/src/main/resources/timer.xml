@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="beispiel"
+		class="org.springframework.scheduling.timer.MethodInvokingTimerTaskFactoryBean">
+		<property name="targetObject">
+			<bean class="springtimer.ATimerBean" />
+		</property>
+		<property name="targetMethod" value="doIt" />
+	</bean>
+
+	<bean id="scheduledTask1" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+		<property name="timerTask" ref="beispiel" />
+		<property name="delay" value="10000" />
+		<property name="period" value="5000" />
+	</bean>
+
+	<bean id="scheduledTask2" class="org.springframework.scheduling.timer.ScheduledTimerTask">
+		<property name="timerTask">
+			<bean class="springtimer.ATimerTask" />
+		</property>
+		<property name="delay" value="0" />
+		<property name="period" value="5000" />
+	</bean>
+
+
+	<bean id="timerFactory" class="org.springframework.scheduling.timer.TimerFactoryBean">
+		<property name="scheduledTimerTasks">
+			<list>
+				<ref bean="scheduledTask1" />
+				<ref bean="scheduledTask2" />
+			</list>
+		</property>
+		<property name="daemon" value="false" />
+	</bean>
+
+</beans>

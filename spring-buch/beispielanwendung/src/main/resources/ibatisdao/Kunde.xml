@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Kunde">
+	<resultMap id="result" class="businessobjects.Kunde">
+		<result property="id" column="ID" columnIndex="1"/>
+		<result property="vorname" column="VORNAME" columnIndex="2"/>
+		<result property="name" column="NAME" columnIndex="3"/>
+		<result property="kontostand" column="KONTOSTAND" columnIndex="4"/>
+	</resultMap>
+	
+	<select id="getAllKunde" resultMap="result">
+       SELECT K.ID as ID, VORNAME, NAME, KONTOSTAND FROM KUNDE K 
+	</select>
+
+	<select id="getKundeByID" resultMap="result" parameterClass="int">
+       SELECT K.ID as ID, VORNAME, NAME, KONTOSTAND FROM KUNDE K WHERE K.ID=#id# 
+	</select>
+
+	<select id="getKundeByName" resultMap="result" parameterClass="string">
+       SELECT K.ID as ID, VORNAME, NAME, KONTOSTAND FROM KUNDE K WHERE K.NAME=#name# 
+	</select>
+
+	<delete id="deleteKundeByName" parameterClass="string">
+       DELETE FROM KUNDE WHERE NAME=#name#
+	</delete>
+
+	<delete id="deleteKundeByID" parameterClass="int">
+       DELETE FROM KUNDE WHERE ID=#id#
+	</delete>
+	
+	<insert id="saveKunde" parameterClass="businessobjects.Kunde">
+		INSERT INTO KUNDE(VORNAME,NAME,KONTOSTAND) VALUES(#vorname#,#name#,#kontostand#)
+		<selectKey resultClass="int" keyProperty="id">
+			CALL IDENTITY()
+		</selectKey>	
+	</insert>
+	
+	<update id="updateKunde" parameterClass="businessobjects.Kunde">
+		UPDATE KUNDE SET VORNAME=#vorname#, NAME=#name#, KONTOSTAND=#kontostand# WHERE ID=#id#
+	</update>
+</sqlMap>

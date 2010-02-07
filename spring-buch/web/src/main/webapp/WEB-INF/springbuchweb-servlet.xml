@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="web" />
+	
+
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="cacheSeconds" value="0" />
+		<property name="webBindingInitializer">
+			<bean
+				class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean name="/Bestellung" class="web.einfachebestellung.EinfacheBestellungController">
+		<property name="bestellung" ref="bestellung" />
+		<property name="pages">
+			<list>
+				<value>bestellungKundeID</value>
+				<value>bestellungWare</value>
+			</list>
+		</property>
+		<property name="successView" value="bestellungSuccess" />
+		<property name="exceptionView" value="bestellungException" />
+		<property name="cancelView" value="bestellungCancel" />
+	</bean>
+
+	<bean name="/Liste" class="web.kunde.KundeListController" />
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+	</bean>
+
+</beans>

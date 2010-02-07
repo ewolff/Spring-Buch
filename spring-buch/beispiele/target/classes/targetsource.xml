@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="swappable" class="targetsource.Bean"/>
+	
+	<bean id="hotSwappableTargetSource" 
+		class="org.springframework.aop.target.HotSwappableTargetSource">
+		<constructor-arg>
+			<ref local="swappable"/>
+		</constructor-arg>
+	</bean>
+	
+	<bean id="swapper" 
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="target">
+			<ref local="swappable"/>
+		</property>
+		<property name="targetSource">
+			<ref local="hotSwappableTargetSource"/>
+		</property>
+	</bean>
+	
+</beans>

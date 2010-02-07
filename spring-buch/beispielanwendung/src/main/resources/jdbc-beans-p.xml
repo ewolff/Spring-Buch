@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close"
+		p:driverClassName="org.hsqldb.jdbcDriver"
+		p:url="jdbc:hsqldb:res:springbuchhsqldb" p:username="sa"
+		p:password="" />
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		p:dataSource-ref="dataSource" />
+
+	<bean id="template"
+		class="org.springframework.jdbc.core.JdbcTemplate"
+		p:dataSource-ref="dataSource" />
+
+
+	<bean id="kundeDAO" class="springjdbcdao.KundeDAO"
+		p:jdbcTemplate-ref="template" />
+
+
+	<bean id="bestellungDAO" class="springjdbcdao.BestellungDAO"
+		p:dataSource-ref="dataSource" p:kundeDAO-ref="kundeDAO"
+		p:wareDAO-ref="wareDAO" />
+
+	<bean id="wareDAO" class="springjdbcdao.WareDAO"
+		p:dataSource-ref="dataSource" />
+
+	<bean id="bestellung"
+		class="businessprocess.BestellungBusinessProcess"
+		p:bestellungDAO-ref="bestellungDAO" p:kundeDAO-ref="kundeDAO"
+		p:wareDAO-ref="wareDAO" />
+
+
+</beans>

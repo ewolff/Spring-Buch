@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true">
+
+	<class name="businessobjects.Kunde" table="kunde" >
+		<id name="id" unsaved-value="0">
+			<generator class="native"/>
+		</id>
+		<property name="vorname"/>
+		<property name="name"/>
+		<property name="kontostand"/>
+	</class>
+
+	<class name="businessobjects.Bestellung" table="bestellung">
+		<id name="id" unsaved-value="0">
+			<generator class="native"/>
+		</id>
+		<many-to-one name="kunde" column="id_kunde"/> 
+		<set name="detail" table="bestellungdetail" cascade="all"  lazy="false">
+			<key column="id_bestellung"/>
+			<one-to-many class="businessobjects.BestellPosition"/>
+		</set>
+	</class>	
+
+	<class name="businessobjects.BestellPosition" table="bestellungdetail">
+		<id name="id" unsaved-value="0">
+			<generator class="native"/>
+		</id>
+		<property name="anzahl"/>
+		<many-to-one name="ware" column="id_ware"/> 
+	</class>	
+
+	<class name="businessobjects.Ware" table="ware">
+		<id name="id" unsaved-value="0">
+			<generator class="native"/>
+		</id>
+		<property name="bezeichnung"/>
+		<property name="preis"/>
+	</class>	
+	
+</hibernate-mapping>

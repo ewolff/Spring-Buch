@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<project name="SpringBuchPerformance" default="main" basedir=".">
+
+	<property file="ant.properties" />
+
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="build.deploy.dir" value="${build.dir}/deploy" />
+	<property name="build.classes.dir" value="${basedir}/bin" />
+
+	<target name="init">
+		<echo message="user.home = ${user.home}" />
+		<echo message="java.home = ${java.home}" />
+		<echo message="ant.home = ${ant.home}" />
+		<echo message="spring.home = ${spring.home}" />
+		<echo message="java.class.path = ${java.class.path}" />
+		<echo message="" />
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.deploy.dir}" />
+		<available property="jdk1.3+" classname="java.lang.StrictMath" />
+	</target>
+
+
+	<path id="base.path">
+		<fileset dir="${spring.home}/dist">
+			<include name="*.jar" />
+		</fileset>
+		<fileset dir="${spring.home}/lib">
+			<include name="**/*.jar" />
+		</fileset>
+		<pathelement location="${build.classes.dir}" />
+	</path>
+
+
+	<!-- =================================================================== -->
+	<!-- Compiles the source code                                        -->
+	<!-- =================================================================== -->
+
+	<target name="compile" description="Compiles everything">
+		<mkdir dir="${build.classes.dir}" />
+		<javac destdir="${build.classes.dir}" debug="on" deprecation="off" optimize="on">
+			<classpath>
+				<path refid="base.path" />
+			</classpath>
+			<src path="${src.dir}" />
+		</javac>
+		<copy todir="${build.classes.dir}">
+			<fileset dir="${src.dir}" excludes="**/*.java" />
+		</copy>
+	</target>
+
+	<target name="run-performance" description="Run the performance demo" depends="compile">
+
+		<java classname="springperformance.PerformanceMain" fork="true">
+			<classpath>
+				<pathelement location="${build.classes.dir}" />
+				<path refid="base.path" />
+			</classpath>
+		</java>
+	</target>
+
+
+	<!-- =================================================================== -->
+	<!-- Main target                                                         -->
+	<!-- =================================================================== -->
+
+	<target name="main" depends="run-performance" description="Run the performance test">
+	</target>
+
+	<!-- =================================================================== -->
+	<!-- Cleans up the current build                                         -->
+	<!-- =================================================================== -->
+
+	<target name="clean" depends="init" description="Clean everything">
+		<delete dir="${build.dir}" />
+	</target>
+
+</project>
+

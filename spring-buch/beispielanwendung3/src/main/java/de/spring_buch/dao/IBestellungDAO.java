@@ -1,0 +1,16 @@
+package de.spring_buch.dao;
+
+import java.util.List;
+
+import de.spring_buch.businessobjects.Bestellung;
+
+
+public interface IBestellungDAO {
+
+    Bestellung save(Bestellung bestellung);
+
+    void deleteByIDKunde(int id_kunde);
+
+    List<Bestellung> getByIDKunde(int id_kunde);
+
+}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Bestellung">
+	
+	<insert id="saveBestellung" parameterClass="businessobjects.Bestellung">
+		INSERT INTO BESTELLUNG(ID_KUNDE) VALUES(#kunde.id#)
+		<selectKey resultClass="int" keyProperty="id">
+			CALL IDENTITY()
+		</selectKey>
+	</insert>
+	
+	<insert id="saveBestellungDetail" parameterClass="map">
+		INSERT INTO BESTELLUNGDETAIL(ID_BESTELLUNG, ANZAHL, ID_WARE) VALUES(#id_bestellung#,#anzahl#,#id_ware#)
+		<selectKey resultClass="int" keyProperty="id">
+			CALL IDENTITY()
+		</selectKey>
+	</insert>
+	
+	<delete id="deleteBestellungByIDKunde" parameterClass="int">
+		DELETE FROM BESTELLUNG WHERE ID_KUNDE=#id_kunde#
+	</delete>
+
+	<delete id="deleteBestellungDetailByIDKunde" parameterClass="int">
+		DELETE FROM BESTELLUNGDETAIL WHERE ID_BESTELLUNG IN (SELECT id FROM BESTELLUNG WHERE ID_KUNDE=#id_kunde#)
+	</delete>
+	
+	<select id="getBestellungByIDKunde" parameterClass="int" resultClass="int">
+		SELECT ID FROM BESTELLUNG WHERE ID_KUNDE=#id_kunde#
+	</select>
+	
+	<select id="getBestellungDetailByIDBestellung" parameterClass="int" resultClass="java.util.HashMap">
+		SELECT ID, ANZAHL, ID_WARE FROM BESTELLUNGDETAIL WHERE ID_BESTELLUNG=#id_bestellung#
+	</select>
+
+</sqlMap>

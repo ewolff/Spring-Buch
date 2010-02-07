@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean name="/kundeDAOHessian"
+		class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="kundeDAO" />
+		<property name="serviceInterface" value="dao.IKundeDAO" />
+	</bean>
+
+	<bean name="/kundeDAOBurlap"
+		class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="kundeDAO" />
+		<property name="serviceInterface" value="dao.IKundeDAO" />
+	</bean>
+
+	<bean name="/kundeDAOSpring"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="kundeDAO" />
+		<property name="serviceInterface" value="dao.IKundeDAO" />
+	</bean>
+
+	<bean name="/wareDAOHessian"
+		class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="wareDAO" />
+		<property name="serviceInterface" value="dao.IWareDAO" />
+	</bean>
+
+	<bean name="/wareDAOBurlap"
+		class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="wareDAO" />
+		<property name="serviceInterface" value="dao.IWareDAO" />
+	</bean>
+
+	<bean name="/wareDAOSpring"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="wareDAO" />
+		<property name="serviceInterface" value="dao.IWareDAO" />
+	</bean>
+
+	<bean name="/bestellungDAOHessian"
+		class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="bestellungDAO" />
+		<property name="serviceInterface" value="dao.IBestellungDAO" />
+	</bean>
+
+	<bean name="/bestellungDAOBurlap"
+		class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="bestellungDAO" />
+		<property name="serviceInterface" value="dao.IBestellungDAO" />
+	</bean>
+
+	<bean name="/bestellungDAOSpring"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="bestellungDAO" />
+		<property name="serviceInterface" value="dao.IBestellungDAO" />
+	</bean>
+
+	<bean name="/bestellungHessian"
+		class="org.springframework.remoting.caucho.HessianServiceExporter">
+		<property name="service" ref="bestellung" />
+		<property name="serviceInterface" value="businessprocess.IBestellungBusinessProcess" />
+	</bean>
+
+	<bean name="/bestellungBurlap"
+		class="org.springframework.remoting.caucho.BurlapServiceExporter">
+		<property name="service" ref="bestellung" />
+		<property name="serviceInterface" value="businessprocess.IBestellungBusinessProcess" />
+	</bean>
+
+	<bean name="/bestellungSpring"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="service" ref="bestellung" />
+		<property name="serviceInterface" value="businessprocess.IBestellungBusinessProcess" />
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />
+
+
+</beans>

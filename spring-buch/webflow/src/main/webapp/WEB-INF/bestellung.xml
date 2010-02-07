@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+              http://www.springframework.org/schema/webflow
+              http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
+
+	<var name="einkaufswagen" class="businessobjects.Einkaufswagen" />
+
+	<view-state id="formularKundenId" view="kundeIdView" model="einkaufswagen">
+		<var name="kunde" class="businessobjects.Kunde" />
+		<on-entry>
+			<evaluate expression="testDatenGenerator.kunde" result="kunde" />
+		</on-entry>
+		<transition on="submit" to="formularBestellzeile" />
+	</view-state>
+
+	<view-state id="formularBestellzeile" view="bestellzeileView"
+		model="bestellzeile">
+		<var name="bestellzeile" class="businessobjects.EinkaufswagenInhalt" />
+		<var name="ware" class="businessobjects.Ware" />
+		<on-entry>
+			<evaluate expression="testDatenGenerator.ware" result="ware" />
+		</on-entry>
+
+		<transition on="abschicken" to="bestellungAufgeben" />
+		<transition on="hinzufuegen" to="formularBestellzeile">
+			<evaluate expression="einkaufswagen.add(bestellzeile)" />
+		</transition>
+	</view-state>
+
+	<action-state id="bestellungAufgeben">
+		<evaluate expression="bestellungAufgebenBean.bestellungAufgeben(einkaufswagen)" />
+		<transition on="no" to="bestellungProblem" />
+		<transition on="yes" to="bestellungBestaetigung" />
+	</action-state>
+
+	<end-state id="bestellungBestaetigung" view="bestellungBestaetigungView" />
+	<end-state id="bestellungProblem" view="bestellungProblemView" />
+
+</flow>
+

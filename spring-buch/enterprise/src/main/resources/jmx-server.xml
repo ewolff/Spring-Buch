@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="counter" class="springjmx.JmxCounter" />
+
+	<bean id="counterJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="counter" />
+		<property name="targetMethod" value="inc" />
+	</bean>
+
+
+
+	<bean id="simpleTrigger" class="org.springframework.scheduling.quartz.SimpleTriggerBean">
+		<property name="jobDetail" ref="counterJobDetail" />
+		<property name="startDelay" value="10000" />
+		<property name="repeatInterval" value="5000" />
+	</bean>
+
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="simpleTrigger" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="counterJobDetailJmxExporter" class="org.springframework.jmx.export.MBeanExporter">
+		<property name="beans">
+			<map>
+				<entry key="springbuch:name=counterJobDetail" value-ref="counter" />
+			</map>
+		</property>
+		<property name="server" ref="mbeanServer" />
+		<!--  <property name="namingStrategy">
+			<bean
+				class="org.springframework.jmx.export.naming.IdentityNamingStrategy" />
+		</property> -->
+		<property name="assembler">
+			<bean class="org.springframework.jmx.export.assembler.InterfaceBasedMBeanInfoAssembler" />
+		</property>
+	</bean>
+
+	<bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+		<property name="locateExistingServerIfPossible" value="true" />
+	</bean>
+
+</beans>

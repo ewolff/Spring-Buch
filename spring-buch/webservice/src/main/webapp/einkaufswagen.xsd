@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://www.spring-buch.de/ws"
+	xmlns:tns="http://www.spring-buch.de/ws"
+	elementFormDefault="qualified">
+
+	<complexType name="Einkaufswagen">
+		<sequence>
+			<element name="kunde-id" type="long" />
+			<element name="einkaufswagen-inhalt"
+				type="tns:EinkaufswagenInhalt" minOccurs="1" maxOccurs="unbounded" />
+		</sequence>
+	</complexType>
+
+	<complexType name="EinkaufswagenInhalt">
+		<all>
+			<element name="anzahl" type="positiveInteger" />
+			<element name="id-ware" type="long" />
+		</all>
+	</complexType>
+
+	<element name="bestellenRequest">
+		<complexType>
+			<sequence>
+				<element name="einkaufswagen" type="tns:Einkaufswagen" />
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="bestellenResponse">
+		<complexType>
+			<sequence>
+				<element name="ergebnis" type="string" />
+			</sequence>
+		</complexType>
+	</element>
+
+</schema>

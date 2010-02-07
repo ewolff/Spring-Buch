@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<util:list id="zahlen" list-class="java.util.ArrayList">
+		<value>18</value>
+		<value>42</value>
+	</util:list>
+
+	<util:properties id="sampleproperties"
+		location="classpath:komplexetypen/sampleproperties.properties" />
+
+	<bean id="eineBean" class="komplexetypen.EineBean" >
+		<property name="list" ref="zahlen" />
+		<property name="map">
+			<util:map map-class="java.util.TreeMap">
+				<entry key="schluessel" value="wert" />
+				<entry key="nullString">
+					<null />
+				</entry>
+				<entry>
+					<key>
+						<value>schluessel2</value>
+					</key>
+					<value>wert2</value>
+				</entry>
+				<entry key="einKey" value-ref="eineBean" />
+			</util:map>
+		</property>
+		<property name="properties" ref="sampleproperties" />
+		<property name="level">
+			<util:constant static-field="org.apache.log4j.Level.INFO" />
+		</property>
+		<property name="eineEnumeration" value="WERT" />
+	</bean>
+
+	<bean id="eineAndereBean" class="komplexetypen.EineBean">
+		<property name="list">
+			<util:property-path path="eineBean.list" />
+		</property>
+		<property name="level" value="INFO" />
+	</bean>
+
+
+</beans>
