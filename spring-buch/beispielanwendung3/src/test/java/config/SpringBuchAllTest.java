@@ -10,11 +10,9 @@ import de.spring_buch.dao.BestellungDAOTest;
 import de.spring_buch.dao.KundeDAOTest;
 import de.spring_buch.dao.WareDAOTest;
 
-
 @RunWith(Suite.class)
-@Transactional
 @Suite.SuiteClasses( { BestellungDAOTest.class, BestellungOhneSpringTest.class,
 		BestellungTestMitSpring.class, KundeDAOTest.class, WareDAOTest.class })
-public class SpringBuchAllTest  {
+public class SpringBuchAllTest {
 
 }

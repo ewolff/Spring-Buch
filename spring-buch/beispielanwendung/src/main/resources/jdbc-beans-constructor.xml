@@ -31,10 +31,12 @@
 		<constructor-arg ref="dataSource" />
 	</bean>
 
+
+
 	<bean id="bestellung" class="businessprocess.BestellungBusinessProcess">
-		<constructor-arg ref="bestellungDAO" />
-		<constructor-arg ref="kundeDAO" />
-		<constructor-arg ref="wareDAO" />
+		<property name="bestellungDAO" ref="bestellungDAO" />
+		<property name="kundeDAO" ref="kundeDAO" />
+		<property name="wareDAO" ref="wareDAO" />
 	</bean>
 
 </beans>

@@ -20,12 +20,12 @@
 	<bean id="kundeDAO" class="springjdbcdao.KundeDAO" autowire="byName" />
 
 	<bean id="bestellungDAO" class="springjdbcdao.BestellungDAO"
-		autowire="byName" />
+		autowire="constructor" />
 
 	<bean id="wareDAO" class="springjdbcdao.WareDAO" autowire="byName" />
 
 	<bean id="bestellung" class="businessprocess.BestellungBusinessProcess"
-		autowire="constructor" />
+		autowire="byType" />
 
 	<bean id="transactionAttributeSource"
 		class="org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource">

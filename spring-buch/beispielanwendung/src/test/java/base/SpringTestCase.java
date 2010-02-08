@@ -1,24 +1,14 @@
 package base;
 
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-public class SpringTestCase extends AbstractTransactionalDataSourceSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/spring-jdbc-beans.xml")
+@Transactional
+public abstract class SpringTestCase {
 
-	private static boolean loggedSpringFile = false;
-
-	private static String configLocation = "spring-jdbc-beans.xml";
-
-	public static void setConfigLocation(String configLocation) {
-		SpringTestCase.configLocation = configLocation;
-	}
-
-	public SpringTestCase() {
-		super();
-		setAutowireMode(AUTOWIRE_BY_NAME);
-	}
-
-	protected String[] getConfigLocations() {
-		return new String[] { configLocation };
-	}
 
 }

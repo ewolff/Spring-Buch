@@ -96,12 +96,20 @@
 		</plugins>
 	</build>
 	<repositories>
-		<repository>
+		<!--repository>
 			<id>SpringSource Enterprise Bundle Repository - External
 				Bundle
 				Milestones</id>
 			<url>http://repository.springsource.com/maven/bundles/milestone
 			</url>
+		</repository -->
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>central</id>
+			<name>Maven Repository Switchboard</name>
+			<url>http://repo1.maven.org/maven2</url>
 		</repository>
 		<repository>
 			<id>SpringSource Enterprise Bundle Repository -
@@ -117,32 +125,16 @@
 			<url>http://repository.springsource.com/maven/bundles/external
 			</url>
 		</repository>
-		<repository>
+		<!--repository>
 			<id>java.net</id>
 			<url>http://download.java.net/maven/2/</url>
-		</repository>
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>central</id>
-			<name>Maven Repository Switchboard</name>
-			<url>http://repo1.maven.org/maven2</url>
-		</repository>
+		</repository -->
 		<repository>
 		  <id>download.java.net</id>
 		  <name>Java.net's Maven1 repository</name>
 		  <url>http://download.java.net/maven/1/</url>
 		  <layout>legacy</layout>
 		</repository> 
-		<!--repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>spring-buch</id>
-			<name>Spring Buch Repository</name>
-			<url>http://spring-buch.de/maven</url>
-		</repository -->
 	</repositories>
 	<dependencyManagement>
 		<dependencies>

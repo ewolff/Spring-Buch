@@ -1,5 +1,10 @@
 package test;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import base.SpringTestCase;
 import businessobjects.Einkaufswagen;
 import businessobjects.Kunde;
@@ -12,79 +17,54 @@ import dao.IWareDAO;
 
 public class BestellungTestMitSpring extends SpringTestCase {
 
+	@Autowired
 	private IKundeDAO kundeDAO;
 
+	@Autowired
 	private IBestellungDAO bestellungDAO;
 
+	@Autowired
 	private IWareDAO wareDAO;
 
+	@Autowired
 	private IBestellungBusinessProcess bestellung;
 
 	private Kunde kunde;
 
 	private Ware ware;
 
-	public void setBestellung(IBestellungBusinessProcess bestellung) {
-		this.bestellung = bestellung;
-	}
-
-	public void setBestellungDAO(IBestellungDAO bestellungDAO) {
-		this.bestellungDAO = bestellungDAO;
-	}
-
-	public void setKundeDAO(IKundeDAO kundeDAO) {
-		this.kundeDAO = kundeDAO;
-	}
-
-	public void setWareDAO(IWareDAO wareDAO) {
-		this.wareDAO = wareDAO;
-	}
-
 	private void assertAnzahlBestellungen(int anzahlBestellungen) {
-		assertEquals(anzahlBestellungen, bestellungDAO.getByIDKunde(
+		Assert.assertEquals(anzahlBestellungen, bestellungDAO.getByIDKunde(
 				kunde.getId()).size());
 	}
 
-	public void testKeinKunde() {
+	@Test(expected = BestellungException.class)
+	public void testKeinKunde() throws BestellungException {
 		Einkaufswagen einkaufswagen = new Einkaufswagen(-1);
-		try {
-			bestellung.bestellen(einkaufswagen);
-			fail("Exception erwartet");
-		} catch (BestellungException e) {
-		}
+		bestellung.bestellen(einkaufswagen);
 	}
 
-	public void testLeererEinkaufswagen() {
+	@Test(expected = BestellungException.class)
+	public void testLeererEinkaufswagen() throws BestellungException {
 		Einkaufswagen einkaufswagen = new Einkaufswagen(kunde.getId());
-		try {
-			bestellung.bestellen(einkaufswagen);
-			fail("Exception erwartet");
-		} catch (BestellungException e) {
-		}
+		bestellung.bestellen(einkaufswagen);
 	}
 
-	public void testZuTeureBestellung() {
+	@Test(expected = BestellungException.class)
+	public void testZuTeureBestellung() throws BestellungException {
 		Einkaufswagen einkaufswagen = new Einkaufswagen(kunde.getId());
 		einkaufswagen.add(ware.getId(), 3);
-		try {
-			bestellung.bestellen(einkaufswagen);
-			fail("Exception erwartet");
-		} catch (BestellungException e) {
-		}
+		bestellung.bestellen(einkaufswagen);
 	}
 
-	public void testKeineWareBestellung() {
+	@Test(expected = BestellungException.class)
+	public void testKeineWareBestellung() throws BestellungException {
 		Einkaufswagen einkaufswagen = new Einkaufswagen(kunde.getId());
 		einkaufswagen.add(0, 1);
-
-		try {
-			bestellung.bestellen(einkaufswagen);
-			fail("Exception erwartet");
-		} catch (BestellungException ex) {
-		}
-
+		bestellung.bestellen(einkaufswagen);
 	}
 
+	@Test
 	public void testErfolgreicheBestellung() throws Exception {
 		double alterKontostand = kunde.getKontostand();
 		Einkaufswagen einkaufswagen = new Einkaufswagen(kunde.getId());
@@ -92,11 +72,12 @@ public class BestellungTestMitSpring extends SpringTestCase {
 		bestellung.bestellen(einkaufswagen);
 		assertAnzahlBestellungen(1);
 		kunde = kundeDAO.getByID(kunde.getId());
-		assertEquals(alterKontostand - ware.getPreis(), kunde.getKontostand(),
-				0.0001);
+		Assert.assertEquals(alterKontostand - ware.getPreis(), kunde
+				.getKontostand(), 0.0001);
 	}
 
-	protected void onSetUpInTransaction() throws Exception {
+	@Before
+	public void onSetUpInTransaction() throws Exception {
 		kunde = new Kunde("Eberhard", "Wolff", 42.0);
 		kunde = kundeDAO.save(kunde);
 		ware = new Ware("iPod", 20);

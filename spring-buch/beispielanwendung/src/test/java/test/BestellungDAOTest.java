@@ -6,9 +6,14 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import base.SpringTestCase;
-import businessobjects.Bestellung;
 import businessobjects.BestellPosition;
+import businessobjects.Bestellung;
 import businessobjects.Kunde;
 import businessobjects.Ware;
 import dao.IBestellungDAO;
@@ -17,97 +22,98 @@ import dao.IWareDAO;
 
 public class BestellungDAOTest extends SpringTestCase {
 
-    private IKundeDAO kundeDAO;
+	@Autowired
+	private IKundeDAO kundeDAO;
 
-    private IBestellungDAO bestellungDAO;
+	@Autowired
+	private IBestellungDAO bestellungDAO;
 
-    private Kunde kunde;
+	@Autowired
+	private IWareDAO wareDAO;
 
-    private IWareDAO wareDAO;
+	private Kunde kunde;
 
-    private Ware iBook;
+	private Ware iBook;
 
-    private Ware powerBook;
+	private Ware powerBook;
 
-    protected void onSetUpInTransaction() throws Exception {
-        kunde = new Kunde("Eberhard", "Wolff", 42.0);
-        kunde = kundeDAO.save(kunde);
-        assertEquals(0, bestellungDAO.getByIDKunde(kunde.getId()).size());
-    }
+	@Before
+	public void onSetUpInTransaction() throws Exception {
+		kunde = new Kunde("Eberhard", "Wolff", 42.0);
+		kunde = kundeDAO.save(kunde);
+		Assert
+				.assertEquals(0, bestellungDAO.getByIDKunde(kunde.getId())
+						.size());
+	}
 
-    public void testLeereBestellung() {
-        Bestellung bestellung = new Bestellung(new TreeSet(), kunde);
-        bestellungDAO.save(bestellung);
-        assertEquals(1, bestellungDAO.getByIDKunde(kunde.getId()).size());
-        bestellungDAO.deleteByIDKunde(kunde.getId());
-        assertEquals(0, bestellungDAO.getByIDKunde(kunde.getId()).size());
-    }
+	@Test
+	public void testLeereBestellung() {
+		Bestellung bestellung = new Bestellung(new TreeSet(), kunde);
+		bestellungDAO.save(bestellung);
+		Assert
+				.assertEquals(1, bestellungDAO.getByIDKunde(kunde.getId())
+						.size());
+		bestellungDAO.deleteByIDKunde(kunde.getId());
+		Assert
+				.assertEquals(0, bestellungDAO.getByIDKunde(kunde.getId())
+						.size());
+	}
 
-    public void testBestellung() {
-        createWaren();
+	@Test
+	public void testBestellung() {
+		createWaren();
 
-        Set details = new HashSet();
-        details.add(new BestellPosition(powerBook, 10));
-        details.add(new BestellPosition(iBook, 5));
-        Bestellung bestellung = new Bestellung(details, kunde);
+		Set details = new HashSet();
+		details.add(new BestellPosition(powerBook, 10));
+		details.add(new BestellPosition(iBook, 5));
+		Bestellung bestellung = new Bestellung(details, kunde);
 
-        bestellungDAO.save(bestellung);
+		bestellungDAO.save(bestellung);
 
-        List bestellungList = bestellungDAO.getByIDKunde(kunde.getId());
-        assertEquals(1, bestellungList.size());
-        Bestellung bestellungResult = (Bestellung) bestellungList.get(0);
-        assertEquals(kunde.getId(), bestellungResult.getKunde().getId());
-        checkDetails(bestellungResult.detailIterator());
+		List bestellungList = bestellungDAO.getByIDKunde(kunde.getId());
+		Assert.assertEquals(1, bestellungList.size());
+		Bestellung bestellungResult = (Bestellung) bestellungList.get(0);
+		Assert.assertEquals(kunde.getId(), bestellungResult.getKunde().getId());
+		checkDetails(bestellungResult.detailIterator());
 
-        bestellungDAO.deleteByIDKunde(kunde.getId());
-        assertEquals(0, bestellungDAO.getByIDKunde(kunde.getId()).size());
-    }
+		bestellungDAO.deleteByIDKunde(kunde.getId());
+		Assert
+				.assertEquals(0, bestellungDAO.getByIDKunde(kunde.getId())
+						.size());
+	}
 
-    private void checkDetails(Iterator detailsIterator) {
-        boolean powerBookFound = false;
-        boolean iBookFound = false;
-        int numberOfDetails = 0;
-        while (detailsIterator.hasNext()) {
-            numberOfDetails++;
-            BestellPosition element = (BestellPosition) detailsIterator
-                    .next();
-            if (element.getWare().getId() == powerBook.getId()) {
-                assertEquals(10, element.getAnzahl());
-                powerBookFound = true;
-            }
-            if (element.getWare().getId() == iBook.getId()) {
-                assertEquals(5, element.getAnzahl());
-                iBookFound = true;
-            }
+	private void checkDetails(Iterator detailsIterator) {
+		boolean powerBookFound = false;
+		boolean iBookFound = false;
+		int numberOfDetails = 0;
+		while (detailsIterator.hasNext()) {
+			numberOfDetails++;
+			BestellPosition element = (BestellPosition) detailsIterator.next();
+			if (element.getWare().getId() == powerBook.getId()) {
+				Assert.assertEquals(10, element.getAnzahl());
+				powerBookFound = true;
+			}
+			if (element.getWare().getId() == iBook.getId()) {
+				Assert.assertEquals(5, element.getAnzahl());
+				iBookFound = true;
+			}
 
-        }
-        assertEquals(2, numberOfDetails);
-        assertTrue(powerBookFound);
-        assertTrue(iBookFound);
-    }
+		}
+		Assert.assertEquals(2, numberOfDetails);
+		Assert.assertTrue(powerBookFound);
+		Assert.assertTrue(iBookFound);
+	}
 
-    private void createWaren() {
-        powerBook = new Ware("PowerBook", 42.0);
-        powerBook = wareDAO.save(powerBook);
-        iBook = new Ware("iBook", 21.0);
-        iBook = wareDAO.save(iBook);
-    }
+	private void createWaren() {
+		powerBook = new Ware("PowerBook", 42.0);
+		powerBook = wareDAO.save(powerBook);
+		iBook = new Ware("iBook", 21.0);
+		iBook = wareDAO.save(iBook);
+	}
 
-    private void deleteWaren() {
-        wareDAO.deleteByID(powerBook.getId());
-        wareDAO.deleteByID(iBook.getId());
-    }
-
-    public void setBestellungDAO(IBestellungDAO bestellungDAO) {
-        this.bestellungDAO = bestellungDAO;
-    }
-
-    public void setKundeDAO(IKundeDAO kundeDAO) {
-        this.kundeDAO = kundeDAO;
-    }
-
-    public void setWareDAO(IWareDAO wareDAO) {
-        this.wareDAO = wareDAO;
-    }
+	private void deleteWaren() {
+		wareDAO.deleteByID(powerBook.getId());
+		wareDAO.deleteByID(iBook.getId());
+	}
 
 }
