@@ -1,9 +1,8 @@
 package remotetest;
 
-public class HessianTest extends RemoteBase {
+import org.springframework.test.context.ContextConfiguration;
 
-	protected String[] getConfigLocations() {
-		return new String[] {"hessian-client.xml"};
-	}
+@ContextConfiguration("/hessian-client.xml")
+public class HessianTest extends RemoteBase {
 
 }

@@ -1,84 +1,71 @@
 package remotetest;
 
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
-
-import dao.IBestellungDAO;
-import dao.IKundeDAO;
-import dao.IWareDAO;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import businessobjects.Einkaufswagen;
 import businessobjects.Kunde;
 import businessobjects.Ware;
 import businessprocess.IBestellungBusinessProcess;
+import dao.IBestellungDAO;
+import dao.IKundeDAO;
+import dao.IWareDAO;
 
-public abstract class  RemoteBase extends AbstractDependencyInjectionSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+public abstract class RemoteBase {
 
-    private static boolean loggedSpringFile = false;
+	@Autowired
+	private IBestellungBusinessProcess bestellung;
 
-    private IBestellungBusinessProcess bestellung;
+	private Kunde kunde;
 
-    private Kunde kunde;
+	private Ware ware;
 
-    private Ware ware;
+	@Autowired
+	private IKundeDAO kundeDAO;
 
-    private IKundeDAO kundeDAO;
+	@Autowired
+	private IWareDAO wareDAO;
 
-    private IWareDAO wareDAO;
+	@Autowired
+	private IBestellungDAO bestellungDAO;
 
-    private IBestellungDAO bestellungDAO;
+	@Before
+	public void onSetUp() {
+		kunde = new Kunde("Eberhard", "Wolff", 42.0);
+		kunde = kundeDAO.save(kunde);
+		ware = new Ware("iPod", 20);
+		ware = wareDAO.save(ware);
+		assertAnzahlBestellungen(0);
+	}
 
-    public RemoteBase() {
-        super();
-        setAutowireMode(AUTOWIRE_BY_NAME);
-    }
+	@After
+	public void onTearDown() {
+		bestellungDAO.deleteByIDKunde(kunde.getId());
+		kundeDAO.deleteByID(kunde.getId());
+		wareDAO.deleteByID(ware.getId());
+	}
 
-    public void setBestellung(IBestellungBusinessProcess bestellung) {
-        this.bestellung = bestellung;
-    }
+	private void assertAnzahlBestellungen(int anzahlBestellungen) {
+		Assert.assertEquals(anzahlBestellungen, bestellungDAO.getByIDKunde(
+				kunde.getId()).size());
+	}
 
-    public void setBestellungDAO(IBestellungDAO bestellungDAO) {
-        this.bestellungDAO = bestellungDAO;
-    }
-
-    public void setKundeDAO(IKundeDAO kundeDAO) {
-        this.kundeDAO = kundeDAO;
-    }
-
-    public void setWareDAO(IWareDAO wareDAO) {
-        this.wareDAO = wareDAO;
-    }
-
-    @Override
-    protected void onSetUp() {
-        kunde = new Kunde("Eberhard", "Wolff", 42.0);
-        kunde = kundeDAO.save(kunde);
-        ware = new Ware("iPod", 20);
-        ware = wareDAO.save(ware);
-        assertAnzahlBestellungen(0);
-    }
-
-    @Override
-    protected void onTearDown() {
-        bestellungDAO.deleteByIDKunde(kunde.getId());
-        kundeDAO.deleteByID(kunde.getId());
-        wareDAO.deleteByID(ware.getId());
-    }
-
-    private void assertAnzahlBestellungen(int anzahlBestellungen) {
-        assertEquals(anzahlBestellungen, bestellungDAO.getByIDKunde(
-                kunde.getId()).size());
-    }
-
-    public void testErfolgreicheBestellung() throws Exception {
-        double alterKontostand = kunde.getKontostand();
-        Einkaufswagen einkaufswagen = new Einkaufswagen(kunde.getId());
-        einkaufswagen.add(ware.getId(), 1);
-        bestellung.bestellen(einkaufswagen);
-        assertAnzahlBestellungen(1);
-        kunde = kundeDAO.getByID(kunde.getId());
-        assertEquals(alterKontostand - ware.getPreis(), kunde.getKontostand(),
-                0.0001);
-    }
-
+	@Test
+	public void testErfolgreicheBestellung() throws Exception {
+		double alterKontostand = kunde.getKontostand();
+		Einkaufswagen einkaufswagen = new Einkaufswagen(kunde.getId());
+		einkaufswagen.add(ware.getId(), 1);
+		bestellung.bestellen(einkaufswagen);
+		assertAnzahlBestellungen(1);
+		kunde = kundeDAO.getByID(kunde.getId());
+		Assert.assertEquals(alterKontostand - ware.getPreis(), kunde
+				.getKontostand(), 0.0001);
+	}
 
 }

@@ -1,25 +1,24 @@
 package introductions;
 
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-public class IntroductionsTest extends
-		AbstractDependencyInjectionSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/introductions.xml")
+public class IntroductionsTest {
 
+	@Autowired
 	private Bean bean;
 
-	public void setBean(Bean bean) {
-		this.bean = bean;
-	}
-
-	@Override
-	protected String[] getConfigLocations() {
-		return new String[] { "introductions.xml" };
-	}
-
+	@Test
 	public void testIntroduction() {
 		for (int i = 0; i < 10; i++) {
 			bean.doIt();
 		}
-		assertEquals(11, ((CallCounter) bean).getCounter());
+		Assert.assertEquals(11, ((CallCounter) bean).getCounter());
 	}
 }

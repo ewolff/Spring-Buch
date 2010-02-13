@@ -1,9 +1,8 @@
 package remotetest;
 
-public class SpringTest extends RemoteBase {
+import org.springframework.test.context.ContextConfiguration;
 
-	protected String[] getConfigLocations() {
-		return new String[] {"spring-client.xml"};
-	}
+@ContextConfiguration("/spring-client.xml")
+public class SpringTest extends RemoteBase {
 
 }

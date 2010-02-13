@@ -1,39 +1,28 @@
 package methodreplacement;
 
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-public class MethodReplacementMain extends
-		AbstractDependencyInjectionSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/methodreplacement.xml")
+public class MethodReplacementMain {
 
-	public MethodReplacementMain() {
-		super();
-		setAutowireMode(AUTOWIRE_BY_NAME);
-	}
-
+	@Autowired
 	private Bean originalbean;
 
+	@Autowired
 	private Bean replaced;
 
-	public void setOriginalbean(Bean originalbean) {
-		this.originalbean = originalbean;
-	}
-
-	public void setReplaced(Bean replaced) {
-		this.replaced = replaced;
-	}
-
-	@Override
-	protected String[] getConfigLocations() {
-		return new String[] { "methodreplacement.xml" };
-	}
-
+	@Test
 	public void testReplace() {
-		assertEquals(0, Bean.doItCount);
+		Assert.assertEquals(0, Bean.doItCount);
 		originalbean.doIt();
-		assertEquals(1, Bean.doItCount);
+		Assert.assertEquals(1, Bean.doItCount);
 		replaced.doIt();
-		assertEquals(1, Bean.doItCount);
+		Assert.assertEquals(1, Bean.doItCount);
 	}
 }

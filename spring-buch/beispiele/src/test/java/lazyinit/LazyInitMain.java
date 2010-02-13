@@ -1,24 +1,31 @@
 package lazyinit;
 
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-public class LazyInitMain extends AbstractDependencyInjectionSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/lazyinit.xml")
+public class LazyInitMain {
 
-	@Override
-	protected String[] getConfigLocations() {
-		return new String[] { "lazyinit.xml" };
-	}
+	@Autowired
+	private ApplicationContext applicationContext;
 
+	@Test
 	public void testLazy() {
-		assertTrue(EagerBean.constructorCalled);
+		Assert.assertTrue(EagerBean.constructorCalled);
 		EagerBean eineEagerBean = (EagerBean) applicationContext
 				.getBean("eagerBean");
 		eineEagerBean.doIt();
 
-		assertFalse(LazyBean.constructorCalled);
+		Assert.assertFalse(LazyBean.constructorCalled);
 		LazyBean eineLazyBean = (LazyBean) applicationContext
 				.getBean("lazyBean");
-		assertTrue(LazyBean.constructorCalled);
+		Assert.assertTrue(LazyBean.constructorCalled);
 		eineLazyBean.doIt();
 	}
 

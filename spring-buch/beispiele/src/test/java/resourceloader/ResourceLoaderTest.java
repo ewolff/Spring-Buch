@@ -4,28 +4,27 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-public class ResourceLoaderTest extends
-		AbstractDependencyInjectionSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/resourceloader.xml")
+public class ResourceLoaderTest {
 
+	@Autowired
 	private ResourceLoader resourceLoader;
 
-	public void setResourceLoader(ResourceLoader resourceLoader) {
-		this.resourceLoader = resourceLoader;
-	}
-	
-	@Override
-	protected String[] getConfigLocations() {
-		return new String[]{"resourceloader.xml"};
-	}
-
+	@Test
 	public void testResourceLoader() throws Exception {
 		Resource resource = resourceLoader.getResource("resourceloader.xml");
-		assertEquals("resourceloader.xml", resource.getFilename());
-		assertTrue(resource.exists());
+		Assert.assertEquals("resourceloader.xml", resource.getFilename());
+		Assert.assertTrue(resource.exists());
 		System.out.println("Inhalt");
 		InputStream inputStream = resource.getInputStream();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(

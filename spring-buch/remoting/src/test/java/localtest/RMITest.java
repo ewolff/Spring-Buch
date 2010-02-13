@@ -1,12 +1,10 @@
 package localtest;
 
+import org.springframework.test.context.ContextConfiguration;
+
 import remotetest.RemoteBase;
 
-
+@ContextConfiguration( { "/rmi-client.xml", "/rmi-server.xml" })
 public class RMITest extends RemoteBase {
-
-	protected String[] getConfigLocations() {
-		return new String[] { "rmi-client.xml", "rmi-server.xml" };
-	}
 
 }

@@ -1,25 +1,8 @@
 package introductions;
 
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+import org.springframework.test.context.ContextConfiguration;
 
-public class IntroductionXMLTest extends
-		AbstractDependencyInjectionSpringContextTests {
+@ContextConfiguration(value = "/introductions-xml.xml", inheritLocations = false)
+public class IntroductionXMLTest extends IntroductionsTest {
 
-	private Bean bean;
-
-	public void setBean(Bean bean) {
-		this.bean = bean;
-	}
-
-	@Override
-	protected String[] getConfigLocations() {
-		return new String[] { "introductions-xml.xml" };
-	}
-
-	public void testIntroduction() {
-		for (int i = 0; i < 10; i++) {
-			bean.doIt();
-		}
-		assertEquals(10, ((CallCounter) bean).getCounter());
-	}
 }

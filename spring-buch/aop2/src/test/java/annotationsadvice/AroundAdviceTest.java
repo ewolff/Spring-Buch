@@ -1,37 +1,35 @@
 package annotationsadvice;
 
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import annotationadvice.LogInsert;
 import businessobjects.Einkaufswagen;
 import businessprocess.BestellungBusinessProcess;
 import businessprocess.BestellungException;
 
-public class AroundAdviceTest extends
-		AbstractDependencyInjectionSpringContextTests {
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration("/aroundannotationadvice.xml")
+public class AroundAdviceTest {
 
+	@Autowired
 	private BestellungBusinessProcess bestellung;
 
-	public void setBestellung(BestellungBusinessProcess bestellung) {
-		this.bestellung = bestellung;
-	}
-
-	@Override
-	protected String[] getConfigLocations() {
-		return new String[] { "aroundannotationadvice.xml" };
-
-	}
-
+	@Test(expected = BestellungException.class)
 	public void testLogging() throws BestellungException {
 		LogInsert.reset();
-		assertFalse(LogInsert.isCalled());
+		Assert.assertFalse(LogInsert.isCalled());
 		bestellung.bestellen(new Einkaufswagen());
 		try {
 			bestellung.bestellen(null);
-			fail("Exception erwartet");
-		} catch (BestellungException e) {
+		} finally {
+			Assert.assertTrue(LogInsert.isCalled());
 		}
-		assertTrue(LogInsert.isCalled());
+
 	}
 
 }
