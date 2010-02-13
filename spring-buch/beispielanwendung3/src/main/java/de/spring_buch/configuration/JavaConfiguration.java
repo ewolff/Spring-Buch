@@ -14,6 +14,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.orm.jpa.vendor.TopLinkJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -66,7 +67,7 @@ public class JavaConfiguration {
 
 	@Bean
 	public JpaVendorAdapter jpaVendorAdapter() {
-		TopLinkJpaVendorAdapter jpaVendorAdapter = new TopLinkJpaVendorAdapter();
+		HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 		jpaVendorAdapter.setGenerateDdl(true);
 		jpaVendorAdapter.setShowSql(true);
 		jpaVendorAdapter.setDatabase(Database.HSQL);

@@ -38,7 +38,7 @@
 		<table name="kunde" />
 		<attributes>
 			<id name="id">
-				<generated-value strategy="AUTO" />
+				<generated-value strategy="SEQUENCE" />
 			</id>
 			<basic name="vorname" />
 			<basic name="name" />
@@ -50,7 +50,7 @@
 		<table name="bestellung" />
 		<attributes>
 			<id name="id">
-				<generated-value strategy="AUTO" />
+				<generated-value strategy="SEQUENCE" />
 			</id>
 			<many-to-one name="kunde">
 				<join-column name="id_kunde" />
@@ -68,7 +68,7 @@
 		<table name="bestellposition" />
 		<attributes>
 			<id name="id">
-				<generated-value strategy="AUTO" />
+				<generated-value strategy="SEQUENCE" />
 			</id>
 			<basic name="anzahl" />
 			<many-to-one name="ware" />
@@ -79,7 +79,7 @@
 		<table name="ware" />
 		<attributes>
 			<id name="id">
-				<generated-value strategy="AUTO" />
+				<generated-value strategy="SEQUENCE" />
 			</id>
 			<basic name="bezeichnung" />
 			<basic name="preis" />

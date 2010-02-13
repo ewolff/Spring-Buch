@@ -32,7 +32,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceUnitName" value="SpringBuch" />
 		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.TopLinkJpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
 				<property name="generateDdl" value="true" />
 				<property name="showSql" value="true" />
 				<property name="database">
