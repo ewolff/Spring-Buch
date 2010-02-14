@@ -17,9 +17,9 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>jstl</groupId>
-			<artifactId>jstl</artifactId>
-			<version>1.2</version>
+			<groupId>javax.servlet</groupId>
+			<artifactId>com.springsource.javax.servlet.jsp.jstl</artifactId>
+			<version>1.2.0</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -34,14 +34,14 @@
 			<version>3.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>javax.faces</groupId>
-			<artifactId>jsf-api</artifactId>
-			<version>1.2_09</version>
+			<groupId>com.sun.faces</groupId>
+			<artifactId>com.springsource.com.sun.faces</artifactId>
+			<version>1.2.0.09</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.faces</groupId>
-			<artifactId>jsf-impl</artifactId>
-			<version>1.2_09</version>
+			<artifactId>com.springsource.javax.faces</artifactId>
+			<version>1.2.0.09</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
