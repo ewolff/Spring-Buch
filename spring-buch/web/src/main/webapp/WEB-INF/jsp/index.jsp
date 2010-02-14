@@ -12,9 +12,15 @@
 <p>
   <a href="<c:url value='/springbuchweb/listeEinfach.html' />">Kunden Liste</a>
 </p>
-
+<p>
+  <a href="<c:url value='/springbuchweb/ListeXslt' />">Kunden Liste (XSLT Rendering)</a>
 </p>
-<p></p>
+<p>
+  <a href="<c:url value='/springbuchweb/ListePdf.pdf' />">Kunden Liste (Pdf)</a>
+</p>
+<p>
+  <a href="<c:url value='/springbuchweb/ListeXls.xls' />">Kunden Liste (Excel)</a>
+</p>
 <p>
   <a href="<c:url value='/springbuchweb/Create' />">Kunden anlegen</a>  
 </p>

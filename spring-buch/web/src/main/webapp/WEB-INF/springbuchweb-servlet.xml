@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<context:component-scan base-package="web" />
-	
+
 
 	<bean
 		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
@@ -32,12 +32,39 @@
 		<property name="cancelView" value="bestellungCancel" />
 	</bean>
 
-	<bean name="/Liste" class="web.kunde.KundeListController" />
+	<bean name="/ListeXslt" class="web.kunde.KundeListController">
+		<property name="view" value="kundenListeXslt" />
+	</bean>
+
+	<bean name="/ListeXls.xls" class="web.kunde.KundeListController">
+		<property name="view" value="kundenListeExcel" />
+	</bean>
+
+	<bean name="/ListePdf.pdf" class="web.kunde.KundeListController">
+		<property name="view" value="kundenListePdf" />
+	</bean>
+
+
+	<bean name="kundenListeXslt" class="web.kunde.KundenListeXsltView">
+		<property name="url" value="/WEB-INF/xslt/kundeList.xslt" />
+	</bean>
+
+	<bean name="kundenListeExcel" class="web.kunde.KundenListeExcelView">
+	</bean>
+
+	<bean name="kundenListePdf" class="web.kunde.KundenListePdfView">
+	</bean>
+
+
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="0" />
+	</bean>
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
+		<property name="order" value="1" />
 		<property name="viewClass"
 			value="org.springframework.web.servlet.view.JstlView" />
 	</bean>
