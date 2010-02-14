@@ -14,22 +14,7 @@
 <body>
 <h2>Bestellung: Ware eingeben</h2>
 <form:form commandName="einfacheBestellung">
-	<font color="red"> <form:errors path="*" /> </font>
-Bitte geben Sie die Id und Anzahl der Ware ein. <br>
-	<b>Id:</b>
-	<font color="red"> <b><form:errors path="id_ware" /></b> </font>
-	<br>
-	<form:input
-		size="10"
-		path="id_ware" />
-	<br>
-	<b>Anzahl: </b>
-	<font color="red"> <b><form:errors path="anzahl" /></b> </font>
-	<br>
-	<form:input
-		size="10"
-		path="anzahl" />
-	<br>
+	
 	<input
 		type="submit"
 		value="Back"

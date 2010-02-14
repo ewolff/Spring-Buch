@@ -18,20 +18,6 @@
 		</property>
 	</bean>
 
-
-	<bean name="/Bestellung" class="web.einfachebestellung.EinfacheBestellungController">
-		<property name="bestellung" ref="bestellung" />
-		<property name="pages">
-			<list>
-				<value>bestellungKundeID</value>
-				<value>bestellungWare</value>
-			</list>
-		</property>
-		<property name="successView" value="bestellungSuccess" />
-		<property name="exceptionView" value="bestellungException" />
-		<property name="cancelView" value="bestellungCancel" />
-	</bean>
-
 	<bean name="/ListeXslt" class="web.kunde.KundeListController">
 		<property name="view" value="kundenListeXslt" />
 	</bean>
