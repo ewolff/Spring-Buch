@@ -7,9 +7,9 @@
 	<name>Parent POM fuer das Spring Buch</name>
 	<version>3.0.0</version>
 	<properties>
-		<spring.version>3.0.0.RELEASE</spring.version>
+		<spring.version>3.0.1.RELEASE</spring.version>
 		<aspectj.version>1.6.5</aspectj.version>
-		<springsecurity.version>3.0.1.RELEASE</springsecurity.version>
+		<springsecurity.version>3.0.2.RELEASE</springsecurity.version>
 		<springwebservices.version>1.5.9</springwebservices.version>
 	</properties>
 	<modules>
