@@ -4,7 +4,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import remotetest.RemoteBase;
 
-@ContextConfiguration( { "/rmi-client.xml", "/rmi-server.xml" })
+@ContextConfiguration( { "/rmi-server.xml", "/rmi-client.xml" })
 public class RMITest extends RemoteBase {
 
 }

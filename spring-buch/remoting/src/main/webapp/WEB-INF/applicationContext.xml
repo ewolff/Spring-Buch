@@ -2,76 +2,52 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	
-	<bean id="datasource"
-		class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-		<property name="url" value="jdbc:hsqldb:res:springbuchhsqldb" />
-		<property name="username" value="sa" />
-		<property name="password" value="" />
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:tx="http://www.springframework.org/schema/tx">
+
+	<jdbc:embedded-database id="dataSource" type="HSQL">
+		<jdbc:script location="classpath:init.sql" />
+	</jdbc:embedded-database>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="transactionmanager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="datasource"/>
-	</bean>
-	
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* springjdbcdao.*+.*(..))|| execution(* businessprocess.*+.*(..))" />
+	</aop:config>
+
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
 	<bean id="kundeDAO" class="springjdbcdao.KundeDAO">
-		<property name="dataSource" ref="datasource"/>
+		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
 	<bean id="bestellungDAO" class="springjdbcdao.BestellungDAO">
-		<property name="dataSource" ref="datasource"/>
-		<property name="kundeDAO" ref="kundeDAO"/>
-		<property name="wareDAO" ref="wareDAO"/>
+		<property name="dataSource" ref="dataSource" />
+		<property name="kundeDAO" ref="kundeDAO" />
+		<property name="wareDAO" ref="wareDAO" />
 	</bean>
-	
+
 	<bean id="wareDAO" class="springjdbcdao.WareDAO">
- 		<property name="dataSource" ref="datasource"/>
+		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
+
 	<bean id="bestellung" class="businessprocess.BestellungBusinessProcess">
-		<property name="bestellungDAO" ref="bestellungDAO"/>
-		<property name="kundeDAO" ref="kundeDAO"/>
-		<property name="wareDAO" ref="wareDAO"/>
+		<property name="bestellungDAO" ref="bestellungDAO" />
+		<property name="kundeDAO" ref="kundeDAO" />
+		<property name="wareDAO" ref="wareDAO" />
 	</bean>
-	
-	<bean id="transactionAttributeSource"
-		class="org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource">
-		<property name="nameMap">
-			<map>
-				<entry key="bestellen*"
-					value="PROPAGATION_REQUIRED"/>
-				<entry key="save" value="PROPAGATION_REQUIRED"/>
-				<entry key="getBy*" value="PROPAGATION_REQUIRED"/>
-				<entry key="deleteBy*" value="PROPAGATION_REQUIRED"/>
-				<entry key="update" value="PROPAGATION_REQUIRED"/>
-			</map>
-		</property>
-	</bean>
-	<bean id="transactionInterceptor"
-		class="org.springframework.transaction.interceptor.TransactionInterceptor">
-		<property name="transactionManager" ref="transactionmanager"/>
-		<property name="transactionAttributeSource"
-			ref="transactionAttributeSource"/>
-	</bean>
-	<bean id="autoProxyCreator"
-		class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
-		<property name="interceptorNames">
-			<list>
-				<idref local="transactionInterceptor"></idref>
-			</list>
-		</property>
-		<property name="beanNames">
-			<list>
-				<idref local="bestellung"/>
-				<idref local="kundeDAO"/>
-				<idref local="wareDAO"/>
-				<idref local="bestellungDAO"/>
-			</list>
-		</property>
-	</bean>
-	
+
 </beans>

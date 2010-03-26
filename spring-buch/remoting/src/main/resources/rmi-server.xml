@@ -1,57 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx">
 
-	<bean id="datasource"
-		class="org.apache.commons.dbcp.BasicDataSource"
-		destroy-method="close">
-		<property name="driverClassName" value="org.hsqldb.jdbcDriver" />
-		<property name="url" value="jdbc:hsqldb:res:springbuchhsqldb" />
-		<property name="username" value="sa" />
-		<property name="password" value="" />
+	<jdbc:embedded-database id="dataSource" type="HSQL">
+		<jdbc:script location="classpath:init.sql" />
+	</jdbc:embedded-database>
+
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<bean id="kundeDAO" class="springjdbcdao.KundeDAO">
-		<property name="dataSource" ref="datasource" />
+
+	<aop:config>
+		<aop:advisor advice-ref="txAdvice"
+			pointcut="execution(* springjdbcdao.*+.*(..))|| execution(* businessprocess.*+.*(..))" />
+	</aop:config>
+
+	<tx:advice id="txAdvice">
+		<tx:attributes>
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<bean id="kundeDAOServer" class="springjdbcdao.KundeDAO">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<bean id="kundeDAORMI"
-		class="org.springframework.remoting.rmi.RmiServiceExporter">
-		<property name="serviceName" value="kundeDAO" />
-		<property name="service" ref="kundeDAO" />
-		<property name="serviceInterface" value="dao.IKundeDAO" />
+	<bean id="bestellungDAOServer" class="springjdbcdao.BestellungDAO">
+		<property name="dataSource" ref="dataSource" />
+		<property name="kundeDAO" ref="kundeDAOServer" />
+		<property name="wareDAO" ref="wareDAOServer" />
 	</bean>
-	<bean id="bestellungDAO" class="springjdbcdao.BestellungDAO">
-		<property name="dataSource" ref="datasource" />
-		<property name="kundeDAO" ref="kundeDAO" />
-		<property name="wareDAO" ref="wareDAO" />
+	<bean id="wareDAOServer" class="springjdbcdao.WareDAO">
+		<property name="dataSource" ref="dataSource" />
 	</bean>
-	<bean id="bestellungDAORMI"
-		class="org.springframework.remoting.rmi.RmiServiceExporter">
-		<property name="serviceName" value="bestellungDAO" />
-		<property name="service" ref="bestellungDAO" />
-		<property name="serviceInterface" value="dao.IBestellungDAO" />
+	<bean id="bestellungServer" class="businessprocess.BestellungBusinessProcess">
+		<property name="bestellungDAO" ref="bestellungDAOServer" />
+		<property name="kundeDAO" ref="kundeDAOServer" />
+		<property name="wareDAO" ref="wareDAOServer" />
 	</bean>
-	<bean id="wareDAO" class="springjdbcdao.WareDAO">
-		<property name="dataSource" ref="datasource" />
-	</bean>
-	<bean id="wareDAORMI"
-		class="org.springframework.remoting.rmi.RmiServiceExporter">
+	<bean id="wareDAORMI" class="org.springframework.remoting.rmi.RmiServiceExporter">
 		<property name="serviceName" value="wareDAO" />
-		<property name="service" ref="wareDAO" />
+		<property name="service" ref="wareDAOServer" />
 		<property name="serviceInterface" value="dao.IWareDAO" />
 	</bean>
-	<bean id="bestellung"
-		class="businessprocess.BestellungBusinessProcess">
-		<property name="bestellungDAO" ref="bestellungDAO" />
-		<property name="kundeDAO" ref="kundeDAO" />
-		<property name="wareDAO" ref="wareDAO" />
+	<bean id="bestellungDAORMI" class="org.springframework.remoting.rmi.RmiServiceExporter">
+		<property name="serviceName" value="bestellungDAO" />
+		<property name="service" ref="bestellungDAOServer" />
+		<property name="serviceInterface" value="dao.IBestellungDAO" />
 	</bean>
-	<bean id="bestellungRMI"
-		class="org.springframework.remoting.rmi.RmiServiceExporter">
+	<bean id="kundeDAORMI" class="org.springframework.remoting.rmi.RmiServiceExporter">
+		<property name="serviceName" value="kundeDAO" />
+		<property name="service" ref="kundeDAOServer" />
+		<property name="serviceInterface" value="dao.IKundeDAO" />
+	</bean>
+	<bean id="bestellungRMI" class="org.springframework.remoting.rmi.RmiServiceExporter">
 		<property name="serviceName" value="bestellung" />
-		<property name="service" ref="bestellung" />
-		<property name="serviceInterface"
-			value="businessprocess.IBestellungBusinessProcess" />
+		<property name="service" ref="bestellungServer" />
+		<property name="serviceInterface" value="businessprocess.IBestellungBusinessProcess" />
 	</bean>
 </beans>
