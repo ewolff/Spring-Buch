@@ -24,7 +24,9 @@
 			<evaluate expression="testDatenGenerator.ware" result="ware" />
 		</on-entry>
 
-		<transition on="abschicken" to="bestellungAufgeben" />
+		<transition on="abschicken" to="bestellungAufgeben">
+			<evaluate expression="einkaufswagen.add(bestellzeile)" />
+		</transition>
 		<transition on="hinzufuegen" to="formularBestellzeile">
 			<evaluate expression="einkaufswagen.add(bestellzeile)" />
 		</transition>
