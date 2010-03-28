@@ -1,25 +1,22 @@
 package de.spring_buch.rest;
 
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.spel.SpelMessage.Kind;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.util.UriTemplate;
 
 import de.spring_buch.businessobjects.Kunde;
 import de.spring_buch.dao.IKundeDAO;
-import de.spring_buch.jpadao.KundeDAO;
 
 @Controller
 public class KundeController {
@@ -39,6 +36,12 @@ public class KundeController {
 	}
 
 	
+	@InitBinder
+	 protected void initBinder(WebDataBinder binder) {
+        binder.setValidator(validator);
+    }
+
+	
 	@RequestMapping(value = "/kunden", method = RequestMethod.GET)
 	public ModelAndView getAll() {
 		return new ModelAndView("kundenListe", "kundenListe", kundeDAO.getAll());
@@ -56,17 +59,15 @@ public class KundeController {
 		return "redirect:/springbuchweb/kunden.html";
 	}
 
+	// Validierung mit @Valid -> Validator wurde per Autowiring injiziert und dann in initBinder gesetzt
+	// Der JSR 303 Validator wird automatisch erzeugt.
 	@RequestMapping(value = "/kunden", method = RequestMethod.POST)
-	public String create(@RequestParam("vorname") String vorname,
-			@RequestParam("name") String name,
-			@RequestParam("kontostand") double kontostand) {
-		Kunde kunde = new Kunde(vorname, name, kontostand);
-		Set<ConstraintViolation<Kunde>> violations = validator.validate(kunde);
-		if (violations.isEmpty()) {
+	public String create(@ModelAttribute @Valid Kunde kunde,BindingResult errors) {
+		if (errors.hasErrors()) {
+			return "redirect:/kundeInvalid.html";
+		} else {
 			kundeDAO.save(kunde);
 			return "redirect:kunden/" + kunde.getId() + ".html";
-		} else {
-			return "redirect:/kundeInvalid.html";
 		}
 	}
 
