@@ -1,1 +1,0 @@
-<%@ include file="/WEB-INF/jsp/ware.jsp" %>
