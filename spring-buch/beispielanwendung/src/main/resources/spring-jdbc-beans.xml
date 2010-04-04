@@ -6,7 +6,7 @@
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc">
 
 	<jdbc:embedded-database id="dataSource" type="HSQL">
-		<jdbc:script location="init.sql" />
+		<jdbc:script location="classpath:init.sql" />
 	</jdbc:embedded-database>
 
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
