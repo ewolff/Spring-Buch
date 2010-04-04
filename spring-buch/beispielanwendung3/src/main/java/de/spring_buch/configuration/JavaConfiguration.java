@@ -84,8 +84,6 @@ public class JavaConfiguration {
 		return new KundeDAO();
 	}
 
-
-
 	@Bean
 	public IBestellungDAO bestellungDAO() {
 		return new BestellungDAO();

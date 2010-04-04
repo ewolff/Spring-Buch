@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beansProjectDescription>
 	<version>1</version>
-	<pluginVersion><![CDATA[2.3.0.200912170948-RELEASE]]></pluginVersion>
+	<pluginVersion><![CDATA[2.3.1.201003090936-RELEASE]]></pluginVersion>
 	<configSuffixes>
 		<configSuffix><![CDATA[xml]]></configSuffix>
 	</configSuffixes>
@@ -19,6 +19,7 @@
 		<config>src/main/resources/propertyeditor-2.xml</config>
 		<config>src/main/resources/resourceloader.xml</config>
 		<config>src/main/resources/targetsource.xml</config>
+		<config>src/main/resources/i18n.xml</config>
 	</configs>
 	<configSets>
 	</configSets>
