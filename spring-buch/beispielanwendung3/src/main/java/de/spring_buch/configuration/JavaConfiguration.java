@@ -9,13 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
-import org.springframework.orm.jpa.vendor.TopLinkJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import de.spring_buch.businessprocess.BestellungBusinessProcess;
@@ -25,7 +23,6 @@ import de.spring_buch.dao.IKundeDAO;
 import de.spring_buch.dao.IWareDAO;
 import de.spring_buch.jpadao.BestellungDAO;
 import de.spring_buch.jpadao.KundeDAO;
-import de.spring_buch.jpadao.WareDAO;
 
 @Configuration
 public class JavaConfiguration {
@@ -46,7 +43,7 @@ public class JavaConfiguration {
 	private IWareDAO wareDAO;
 
 	@Bean(destroyMethod = "close")
-	protected DataSource dataSource() {
+	public DataSource dataSource() {
 		BasicDataSource dataSource = new BasicDataSource();
 		dataSource.setDriverClassName(driver);
 		dataSource.setUrl(url);
@@ -56,7 +53,7 @@ public class JavaConfiguration {
 	}
 
 	@Bean
-	protected EntityManagerFactory entityManagerFactory() {
+	public EntityManagerFactory entityManagerFactory() {
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource());
 		entityManagerFactoryBean.setPersistenceUnitName("SpringBuchJavaConfig");
