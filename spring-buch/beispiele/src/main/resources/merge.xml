@@ -16,7 +16,7 @@
 
 	<bean id="childOhneMerge" parent="abstrakt">
 		<property name="list">
-			<list>
+			<list merge="false">
 				<value>Einziger Wert</value>
 			</list>
 		</property>

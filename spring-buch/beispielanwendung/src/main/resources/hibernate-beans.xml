@@ -28,7 +28,7 @@
 		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
 		<property name="mappingResources">
 			<list>
-				<value>springdemo.hbm.xml</value>
+				<value>/springdemo.hbm.xml</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">
