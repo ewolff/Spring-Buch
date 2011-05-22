@@ -110,6 +110,11 @@
 			<url>http://repo1.maven.org/maven2</url>
 		</repository>
 		<repository>
+			<id>codehaus</id>
+			<name>Codehaus</name>
+			<url>http://repository.codehaus.org</url>
+		</repository>
+		<repository>
 			<id>SpringSource Enterprise Bundle Repository -
 				SpringSource Bundle
 				Releases</id>
