@@ -39,7 +39,6 @@ Projekts, der für die Tests notwendig ist.
 * In `src/main` liegt der Anteil des
 	Projekts, der für die Funktionalitäten benötigt wird.
 
-
 Diese beiden Verzeichnisse haben identische Unterverzeichnisse:
 
 * In `java` liegt der Java-Code.
@@ -72,20 +71,20 @@ hat. Sie können STS unter <https://spring.io/tools>
 runterladen. Alternativ kann man ein Eclipse mit mindestens der
 m2eclipse-Maven-Integration nutzen.
 
-Legen Sie einen neuen Eclipse-Workspace an. Dazu kann man `File ->
-Switch Workspace...` verwenden und in dem Dialog dann ein neues
+Legen Sie einen neuen Eclipse-Workspace an. Dazu kann man *File ->
+Switch Workspace...* verwenden und in dem Dialog dann ein neues
 Verzeichnis eingeben.
 
 Anschließend müssen Sie im File-Menü den Eintrag
-Import. In dem erscheinenden Dialog wählen Sie unter General den Punkt
-Maven Projects. Dann drücken Sie den Next-Button.
-Als Root-Verzeichnis wählen Sie das Verzeichnis mit den
-ausgepackten Beispielen. Dann drücken Sie den Finish-Button. Der
+*Import*. In dem erscheinenden Dialog wählen Sie unter *General* den Punkt
+*Maven Projects*. Dann drücken Sie den *Next*-Button.
+Als *Root*-Verzeichnis wählen Sie das Verzeichnis mit den
+ausgepackten Beispielen. Dann drücken Sie den *Finish*-Button. Der
 Workspace baut sich dann auf.
 
 Web-Anwendungen kann man dann in Eclipse einfach mit einem rechten
-Mausklick auf das Projekt starten. Dort wählt man Run As und dann Run
-On Server. Man muss dann nur noch einen Server auswählen, auf dem die
+Mausklick auf das Projekt starten. Dort wählt man *Run As* und dann *Run
+On Server*. Man muss dann nur noch einen Server auswählen, auf dem die
 Anwendungen laufen soll.
 
 ## [beispielanwendung](beispielanwendung)
