@@ -204,4 +204,4 @@ Dieses Projekt enthält den Code für den AOP-Benchmark. Er wird mit
 	`mvn test` gestartet.
 
 ## [feedback](Feedback)
-Feedback bitte an [Eberhard Wolff](eberhard.wolff@gmail.com).
+Feedback bitte an [Eberhard Wolff](mailto:eberhard.wolff@gmail.com).
