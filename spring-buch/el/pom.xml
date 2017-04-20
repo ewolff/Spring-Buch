@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.spring-buch</groupId>
 	<artifactId>el</artifactId>
 	<name>EL mit Spring 3.0</name>
-	<version>3.0.0</version>
 	<parent>
 		<groupId>de.spring-buch</groupId>
 		<artifactId>parent</artifactId>
@@ -17,57 +16,47 @@
 		</dependency>
 		<dependency>
 			<groupId>org.easymock</groupId>
-			<artifactId>com.springsource.org.easymock
-			</artifactId>
+			<artifactId>easymock</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.core
-			</artifactId>
+			<artifactId>spring-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.test
-			</artifactId>
+			<artifactId>spring-test</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.jdbc
-			</artifactId>
+			<artifactId>spring-jdbc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.orm
-			</artifactId>
+			<artifactId>spring-orm</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.aop
-			</artifactId>
+			<artifactId>spring-aop</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.expression
-			</artifactId>
+			<artifactId>spring-expression</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.objectweb.asm</groupId>
-			<artifactId>com.springsource.org.objectweb.asm.commons
-			</artifactId>
+			<groupId>asm</groupId>
+			<artifactId>asm-commons</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.hsqldb</groupId>
-			<artifactId>com.springsource.org.hsqldb
-			</artifactId>
+			<artifactId>hsqldb</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.cglib</groupId>
-			<artifactId>com.springsource.net.sf.cglib
-			</artifactId>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>xerces</groupId>

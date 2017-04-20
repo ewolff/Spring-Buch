@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.spring-buch</groupId>
 	<artifactId>parent</artifactId>
@@ -94,8 +95,7 @@
 						<exclude>springjms/*.java
 						</exclude>
 					</excludes>
-						<!-- childDelegation>true</childDelegation>
-						<forkMode>pertest</forkMode -->
+					<!-- childDelegation>true</childDelegation> <forkMode>pertest</forkMode -->
 				</configuration>
 			</plugin>
 		</plugins>
@@ -108,25 +108,6 @@
 			<id>central</id>
 			<name>Maven Repository Switchboard</name>
 			<url>http://repo1.maven.org/maven2</url>
-		</repository>
-		<repository>
-			<id>codehaus</id>
-			<name>Codehaus</name>
-			<url>http://repository.codehaus.org</url>
-		</repository>
-		<repository>
-			<id>SpringSource Enterprise Bundle Repository -
-				SpringSource Bundle
-				Releases</id>
-			<url>http://repository.springsource.com/maven/bundles/release
-			</url>
-		</repository>
-		<repository>
-			<id>SpringSource Enterprise Bundle Repository - External
-				Bundle
-				Releases</id>
-			<url>http://repository.springsource.com/maven/bundles/external
-			</url>
 		</repository>
 	</repositories>
 	<dependencyManagement>
@@ -275,7 +256,7 @@
 						<artifactId>spring-aop</artifactId>
 					</exclusion>
 					<exclusion>
-						<groupId>org.springframework.ldap</groupId>
+						<groupId>spring-ldap</groupId>
 						<artifactId>spring-ldap</artifactId>
 					</exclusion>
 					<exclusion>
@@ -322,7 +303,7 @@
 						<artifactId>spring-aop</artifactId>
 					</exclusion>
 					<exclusion>
-						<groupId>org.springframework.ldap</groupId>
+						<groupId>spring-ldap</groupId>
 						<artifactId>spring-ldap</artifactId>
 					</exclusion>
 					<exclusion>
@@ -371,7 +352,7 @@
 						<artifactId>spring-aop</artifactId>
 					</exclusion>
 					<exclusion>
-						<groupId>org.springframework.ldap</groupId>
+						<groupId>spring-ldap</groupId>
 						<artifactId>spring-ldap</artifactId>
 					</exclusion>
 					<exclusion>
@@ -398,22 +379,22 @@
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
-				<artifactId>com.springsource.org.hibernate.validator</artifactId>
+				<artifactId>hibernate-validator</artifactId>
 				<version>4.0.0.GA</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>com.springsource.slf4j.api</artifactId>
+				<artifactId>slf4j-api</artifactId>
 				<version>1.5.6</version>
 			</dependency>
 			<dependency>
 				<groupId>org.slf4j</groupId>
-				<artifactId>com.springsource.slf4j.jcl</artifactId>
+				<artifactId>slf4j-jcl</artifactId>
 				<version>1.5.6</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.validation</groupId>
-				<artifactId>com.springsource.javax.validation</artifactId>
+				<artifactId>validation-api</artifactId>
 				<version>1.0.0.GA</version>
 			</dependency>
 			<dependency>
@@ -430,82 +411,80 @@
 			</dependency>
 			<dependency>
 				<groupId>org.easymock</groupId>
-				<artifactId>com.springsource.org.easymock
-			</artifactId>
-				<version>2.3.0</version>
+				<artifactId>easymock</artifactId>
+				<version>2.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.beans
+				<artifactId>spring-beans
 			</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.jms
+				<artifactId>spring-jms
 			  </artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.context
-			</artifactId>
+				<artifactId>spring-context</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.expression
-			</artifactId>
+				<artifactId>spring-context-support</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.core
-			</artifactId>
+				<artifactId>spring-expression</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.test
-			</artifactId>
+				<artifactId>spring-core</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-test</artifactId>
 				<version>${spring.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.jdbc
-			</artifactId>
+				<artifactId>spring-jdbc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.oxm
-			</artifactId>
+				<artifactId>spring-oxm</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.orm
-			</artifactId>
+				<artifactId>spring-orm</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.aop
-			</artifactId>
+				<artifactId>spring-aop</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.web
-			</artifactId>
+				<artifactId>spring-tx</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
-				<artifactId>org.springframework.web.servlet
-			</artifactId>
+				<artifactId>spring-web</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 			<dependency>
@@ -520,21 +499,23 @@
 				<scope>runtime</scope>
 			</dependency>
 			<dependency>
-				<groupId>org.objectweb.asm</groupId>
-				<artifactId>com.springsource.org.objectweb.asm.commons
-			</artifactId>
+				<groupId>asm</groupId>
+				<artifactId>asm-commons</artifactId>
 				<version>2.2.3</version>
 			</dependency>
 			<dependency>
-				<groupId>org.objectweb.asm</groupId>
-				<artifactId>com.springsource.org.objectweb.asm
-			</artifactId>
+				<groupId>asm</groupId>
+				<artifactId>asm</artifactId>
+				<version>2.2.3</version>
+			</dependency>
+			<dependency>
+				<groupId>asm</groupId>
+				<artifactId>asm</artifactId>
 				<version>2.2.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hsqldb</groupId>
-				<artifactId>com.springsource.org.hsqldb
-			</artifactId>
+				<artifactId>hsqldb</artifactId>
 				<version>1.8.0.10</version>
 			</dependency>
 			<dependency>
@@ -543,34 +524,34 @@
 				<version>2.3.0</version>
 			</dependency>
 			<dependency>
-				<groupId>org.apache.taglibs</groupId>
-				<artifactId>com.springsource.org.apache.taglibs.standard
-				</artifactId>
+				<groupId>taglibs</groupId>
+				<artifactId>standard</artifactId>
 				<version>1.1.2</version>
 			</dependency>
 			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>com.springsource.javax.servlet.jsp.jstl
-			</artifactId>
-				<version>1.2.0</version>
+				<groupId>jstl</groupId>
+				<artifactId>jstl</artifactId>
+				<version>1.2</version>
 			</dependency>
 			<dependency>
 				<groupId>javax.servlet</groupId>
-				<artifactId>com.springsource.javax.servlet
-			</artifactId>
-				<version>2.5.0</version>
+				<artifactId>servlet-api</artifactId>
+				<version>2.5</version>
 			</dependency>
 			<dependency>
-				<groupId>net.sourceforge.cglib</groupId>
-				<artifactId>com.springsource.net.sf.cglib
-			</artifactId>
-				<version>2.1.3</version>
+				<groupId>cglib</groupId>
+				<artifactId>cglib-nodep</artifactId>
+				<version>2.1_3</version>
+			</dependency>
+			<dependency>
+				<groupId>cglib</groupId>
+				<artifactId>cglib</artifactId>
+				<version>2.1_3</version>
 			</dependency>
 			<dependency>
 				<groupId>com.thoughtworks.xstream</groupId>
-				<artifactId>com.springsource.com.thoughtworks.xstream
-			</artifactId>
-				<version>1.3.0</version>
+				<artifactId>xstream</artifactId>
+				<version>1.3</version>
 			</dependency>
 			<dependency>
 				<groupId>org.hibernate</groupId>
@@ -584,7 +565,7 @@
 					</exclusion>
 					<exclusion>
 						<groupId>cglib</groupId>
-						<artifactId>cglib</artifactId>
+						<artifactId>cglib-nodep</artifactId>
 					</exclusion>
 					<exclusion>
 						<groupId>org.slf4j</groupId>

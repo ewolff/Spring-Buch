@@ -1,8 +1,8 @@
 package springtimer;
 
-import junit.framework.Assert;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import org.apache.xbean.spring.context.ClassPathXmlApplicationContext;
+import junit.framework.Assert;
 
 public class QuartzMain {
 

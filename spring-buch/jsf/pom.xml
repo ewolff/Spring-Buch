@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.spring-buch</groupId>
 	<artifactId>jsf</artifactId>
 	<packaging>war</packaging>
 	<name>Spring Buch JSF</name>
-	<version>3.0.0</version>
 	<parent>
 		<groupId>de.spring-buch</groupId>
 		<artifactId>parent</artifactId>
@@ -17,9 +16,8 @@
 			<artifactId>junit</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>com.springsource.javax.servlet.jsp.jstl</artifactId>
-			<version>1.2.0</version>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
@@ -34,14 +32,14 @@
 			<version>3.0.0</version>
 		</dependency>
 		<dependency>
-			<groupId>com.sun.faces</groupId>
-			<artifactId>com.springsource.com.sun.faces</artifactId>
-			<version>1.2.0.09</version>
+			<groupId>javax.faces</groupId>
+			<artifactId>jsf-impl</artifactId>
+			<version>1.2_09</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.faces</groupId>
-			<artifactId>com.springsource.javax.faces</artifactId>
-			<version>1.2.0.09</version>
+			<artifactId>jsf-api</artifactId>
+			<version>1.2_09</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -51,7 +49,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.web</artifactId>
+			<artifactId>spring-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>

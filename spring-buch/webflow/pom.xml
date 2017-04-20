@@ -1,9 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.spring-buch</groupId>
 	<artifactId>webflow</artifactId>
-	<version>3.0.0</version>
 	<packaging>war</packaging>
 	<name>Spring Buch WebFlow</name>
 	<parent>
@@ -13,16 +11,12 @@
 	</parent>
 	<dependencies>
 		<dependency>
-			<groupId>org.apache.taglibs</groupId>
-			<artifactId>com.springsource.org.apache.taglibs.standard
-			</artifactId>
-			<version>1.1.2</version>
+			<groupId>taglibs</groupId>
+			<artifactId>standard</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>com.springsource.javax.servlet.jsp.jstl
-			</artifactId>
-			<version>1.2.0</version>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>javax.activation</groupId>
@@ -36,9 +30,13 @@
 			<version>2.6.9</version>
 		</dependency>
 		<dependency>
+			<groupId>jstl</groupId>
+			<artifactId>jstl</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.webflow</groupId>
-			<artifactId>org.springframework.webflow</artifactId>
-			<version>2.0.5.RELEASE</version>
+			<artifactId>spring-webflow</artifactId>
+			<version>2.0.6.RELEASE</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
@@ -89,11 +87,11 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.web.servlet</artifactId>
+			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.web</artifactId>
+			<artifactId>spring-web</artifactId>
 		</dependency>
 	</dependencies>
 </project>

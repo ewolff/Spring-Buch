@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.spring-buch</groupId>
 	<artifactId>remoting</artifactId>
 	<packaging>war</packaging>
 	<name>Spring Buch Remoting</name>
-	<version>3.0.0</version>
 	<parent>
 		<groupId>de.spring-buch</groupId>
 		<artifactId>parent</artifactId>
@@ -28,16 +27,21 @@
 		</dependency>
 		<dependency>
 			<groupId>com.caucho</groupId>
-			<artifactId>com.springsource.com.caucho</artifactId>
-			<version>3.2.1</version>
+			<artifactId>burlap</artifactId>
+			<version>2.1.12</version>
+		</dependency>
+		<dependency>
+			<groupId>com.caucho</groupId>
+			<artifactId>hessian</artifactId>
+			<version>3.1.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.web</artifactId>
+			<artifactId>spring-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.web.servlet</artifactId>
+			<artifactId>spring-webmvc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>xerces</groupId>

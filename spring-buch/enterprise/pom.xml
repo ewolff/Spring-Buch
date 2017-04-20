@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
-<project>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.spring-buch</groupId>
 	<artifactId>enterprise</artifactId>
 	<name>Enterprise Beispiele aus dem Spring-Buch</name>
-	<version>3.0.0</version>
 	<parent>
 		<groupId>de.spring-buch</groupId>
 		<artifactId>parent</artifactId>
@@ -43,27 +42,27 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.core
-			</artifactId>
+			<artifactId>spring-core</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.jms
-			</artifactId>
+			<artifactId>spring-jms</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.test
-			</artifactId>
+			<artifactId>spring-test</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.context
-			</artifactId>
+			<artifactId>spring-context</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
-			<artifactId>org.springframework.aop</artifactId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>quartz</groupId>
@@ -75,14 +74,13 @@
 			<artifactId>aspectjrt</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>net.sourceforge.cglib</groupId>
-			<artifactId>com.springsource.net.sf.cglib
-		  </artifactId>
+			<groupId>cglib</groupId>
+			<artifactId>cglib-nodep</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.activemq</groupId>
-			<artifactId>apache-activemq</artifactId>
-			<version>4.1.1</version>
+			<artifactId>activemq-core</artifactId>
+			<version>4.1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.annotation</groupId>
